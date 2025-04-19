@@ -16,7 +16,7 @@ public class ProducerController {
     // curl -X POST http://localhost:8080/send -H "Content-Type: text/plain" -d "Привет, RabbitMQ!"
     @PostMapping("/send")
     public String sendMessage(@RequestBody String message) {
-        rabbitTemplate.convertAndSend("medical_queue", message);
+        rabbitTemplate.convertAndSend("medical_tasks", message);
         return "Сообщение отправлено: " + message;
     }
 }
