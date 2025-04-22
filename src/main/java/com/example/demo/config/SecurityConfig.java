@@ -17,8 +17,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Новый способ отключения CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/users/**", "/send").permitAll() // Разрешаем без аутентификации
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll() // Разрешаем все запросы без аутентификации
                 )
                 .formLogin(form -> form.disable()) // Отключаем форму логина
                 .httpBasic(basic -> basic.init(http)); // Новый способ включения HTTP Basic
