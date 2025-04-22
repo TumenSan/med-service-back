@@ -3,8 +3,10 @@ package com.example.demo.service;
 import com.example.demo.dto.ResultDto;
 import com.example.demo.model.Result;
 import com.example.demo.model.Task;
+import com.example.demo.model.Model;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.ResultRepository;
+import com.example.demo.repository.ModelRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,13 +20,17 @@ import java.util.stream.Collectors;
 public class ResultService {
     private final ResultRepository resultRepository;
     private final TaskRepository taskRepository;
+    private final ModelRepository modelRepository;
 
     @Transactional
     public ResultDto.Response createResult(ResultDto.Create resultDto) {
         Task task = taskRepository.findById(resultDto.getTaskId())
                 .orElseThrow(() -> new EntityNotFoundException("Result not found" + resultDto.getTaskId()));
+        Model model = modelRepository.findById(resultDto.getModelId())
+                .orElseThrow(() -> new EntityNotFoundException("Model not found with id: " + resultDto.getModelId()));
         Result result = Result.builder()
                 .task(task)
+                .model(model)
                 .data(resultDto.getData())
                 .conclusion(resultDto.getConclusion())
                 .build();
@@ -59,6 +65,7 @@ public class ResultService {
         return ResultDto.Response.builder()
                 .id(result.getId())
                 .taskId(result.getTask().getId())
+                .modelId(result.getModel().getId())
                 .data(result.getData())
                 .conclusion(result.getConclusion())
                 .createdAt(result.getCreatedAt())

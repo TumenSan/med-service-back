@@ -33,18 +33,17 @@ public class Task {
     private Long id;
 
     // Много задач принадлежат одному пользователю
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     //@JsonIdentityReference(alwaysAsId = false)
     //@Column(name = "user_id", nullable = false)
     private User user;
 
-    //TODO Add model_id and add nullable = false
-    //@Column(name = "model_id", nullable = false)
-    @Column(name = "model_id")
-    private Long modelId;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "model_id", nullable = false)
+    //@Column(name = "model_id")
+    private Model model;
 
     @Column(name = "task_type", nullable = false)
     private String taskType;

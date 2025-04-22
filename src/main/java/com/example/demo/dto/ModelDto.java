@@ -7,16 +7,16 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-public class ResultDto {
+public class ModelDto {
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Create {
-        private Long taskId;
-        private Long modelId;
-        private String data;
-        private String conclusion;
+        private String modelName;
+        private String version;
+        private String path;
+        private LocalDateTime createdAt;
     }
 
     @Data
@@ -25,10 +25,9 @@ public class ResultDto {
     @AllArgsConstructor
     public static class Response {
         private Long id;
-        private Long taskId;
-        private Long modelId;
-        private String data;
+        private String modelName;
+        private String version;
+        private String path;
         private LocalDateTime createdAt;
-        private String conclusion;
     }
 }

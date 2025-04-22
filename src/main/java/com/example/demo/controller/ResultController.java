@@ -21,7 +21,7 @@ public class ResultController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ResultDto.Response>> getAllTasks() {
+    public ResponseEntity<List<ResultDto.Response>> getAllResults() {
         return ResponseEntity.ok(resultService.getAllResults());
     }
 

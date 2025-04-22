@@ -1,10 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.TaskDto;
+import com.example.demo.model.Model;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.ModelRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,14 +20,17 @@ import java.util.stream.Collectors;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
+    private final ModelRepository modelRepository;
 
     @Transactional
     public TaskDto.Response createTask(TaskDto.Create taskDto) {
         User user = userRepository.findById(taskDto.getUserId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Model model = modelRepository.findById(taskDto.getModelId())
+                .orElseThrow(() -> new EntityNotFoundException("Model not found"));
         Task task = Task.builder()
                 .user(user)
-                .modelId(taskDto.getModelId())
+                .model(model)
                 .taskType(taskDto.getTaskType())
                 .parameters(taskDto.getParameters())
                 .status(taskDto.getStatus())
@@ -58,7 +63,7 @@ public class TaskService {
         return TaskDto.Response.builder()
                 .id(task.getId())
                 .userId(task.getUser().getId())
-                .modelId(task.getModelId())
+                .modelId(task.getModel().getId())
                 .taskType(task.getTaskType())
                 .parameters(task.getParameters())
                 .status(task.getStatus())

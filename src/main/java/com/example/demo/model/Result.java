@@ -28,9 +28,14 @@ public class Result {
     private Long id;
 
     // Много результатов принадлежат одной задаче
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id", nullable = false)
     private Task task;
+
+    // Много результатов принадлежат одной модели
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "model_id", nullable = false)
+    private Model model;
 
     @Type(JsonBinaryType.class)
     @Column(columnDefinition = "jsonb") // Для PostgreSQL
