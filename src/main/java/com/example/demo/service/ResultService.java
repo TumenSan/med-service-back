@@ -34,6 +34,7 @@ public class ResultService {
                 .data(resultDto.getData())
                 .conclusion(resultDto.getConclusion())
                 .build();
+        // TODO добавить изменение статуса у task с CREATED на COMPLETED
 
         Result savedResult = resultRepository.save(result);
         return toResponseDto(savedResult);

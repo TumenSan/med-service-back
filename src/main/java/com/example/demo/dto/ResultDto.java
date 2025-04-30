@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public class ResultDto {
     @Data
@@ -15,7 +16,7 @@ public class ResultDto {
     public static class Create {
         private Long taskId;
         private Long modelId;
-        private String data;
+        private Map<String, Object> data;
         private String conclusion;
     }
 
@@ -27,7 +28,7 @@ public class ResultDto {
         private Long id;
         private Long taskId;
         private Long modelId;
-        private String data;
+        private Map<String, Object> data;
         private LocalDateTime createdAt;
         private String conclusion;
     }

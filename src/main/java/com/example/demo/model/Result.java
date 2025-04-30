@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Entity
 @Table (name = "results")
@@ -39,7 +40,7 @@ public class Result {
 
     @Type(JsonBinaryType.class)
     @Column(columnDefinition = "jsonb") // Для PostgreSQL
-    private String data; // JSON строка
+    private Map<String, Object> data;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
