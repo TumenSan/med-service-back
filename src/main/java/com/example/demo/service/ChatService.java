@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.ChatMessageDto;
-import com.example.demo.dto.SendMessageRequestDto;
 import com.example.demo.model.ChatMessage;
 import com.example.demo.repository.ChatMessageRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
+@Log4j2
 public class ChatService {
 
     private ChatMessageRepository chatMessageRepository;
@@ -45,12 +46,12 @@ public class ChatService {
             return;
         }
 
-        String url = "http://" + targetIp + ":8080/api/receiveMessage";
+        String url = "http://" + targetIp + ":8080/api/chat/receivePost";
 
         // Создаем DTO с данными
         ChatMessageDto payloadDto = new ChatMessageDto(
                 senderName,
-                "127.0.0.1", // добавьте IP
+                targetIp, // добавьте IP
                 message,
                 LocalDateTime.now()
         );
@@ -62,7 +63,7 @@ public class ChatService {
 
         // Отправляем запрос
         try {
-            restTemplate.postForEntity(url, requestEntity, String.class);
+            log.info("sendbypost res:" +restTemplate.postForEntity(url, requestEntity, String.class));
         } catch (Exception e) {
             throw new RuntimeException("Не удалось отправить сообщение на " + targetIp);
         }
@@ -71,9 +72,9 @@ public class ChatService {
     // Получение сообщения от другого сервера
     public void receiveMessage(ChatMessageDto dto, String senderIp) {
         ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setSenderName(dto.getSenderName());
+        chatMessage.setSenderName(dto.getName());
         chatMessage.setSenderIp(senderIp);
-        chatMessage.setContent(dto.getContent());
+        chatMessage.setContent(dto.getMessage());
         chatMessage.setTimestamp(dto.getTimestamp());
 
         chatMessageRepository.save(chatMessage);

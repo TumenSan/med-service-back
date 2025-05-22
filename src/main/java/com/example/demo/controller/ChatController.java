@@ -21,7 +21,7 @@ public class ChatController {
     // Отправка сообщения другому серверу
     @PostMapping("/sendMessage")
     public ResponseEntity<String> sendMessage(@RequestBody SendMessageRequestDto request) {
-        chatService.sendMessage(request.getTargetIp(), request.getSenderName(), request.getMessage());
+        chatService.sendMessage(request.getIp(), request.getName(), request.getMessage());
         return ResponseEntity.ok("Сообщение отправлено");
     }
 
@@ -43,11 +43,11 @@ public class ChatController {
     }
 
     // Получение сообщения от другого сервера
-    @PostMapping("/receiveMessage")
-    public ResponseEntity<Void> receiveMessage(
+    @PostMapping("/receivePost")
+    public ResponseEntity<Void> receivePost(
             @RequestBody ChatMessageDto dto,
-            @RequestHeader(name = "X-Forwarded-For", required = false) String senderIp) {
-        chatService.receiveMessage(dto, senderIp);
+            HttpServletRequest ipSender) {
+        chatService.receiveMessage(dto, ipSender.getRemoteAddr());
         return ResponseEntity.ok().build();
     }
 

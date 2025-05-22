@@ -3,31 +3,31 @@ package com.example.demo.dto;
 import java.time.LocalDateTime;
 
 public class SendMessageRequestDto {
-    private String targetIp;
-    private String senderName;
+    private String ip;
+    private String name;
     private String message;
 
     public SendMessageRequestDto() {}
 
     public SendMessageRequestDto(String senderName, String message, LocalDateTime timestamp) {
-        this.senderName = senderName;
+        this.name = senderName;
         this.message = message;
     }
     // Геттеры и сеттеры
-    public String getTargetIp() {
-        return targetIp;
+    public String getIp() {
+        return ip;
     }
 
-    public void setTargetIp(String targetIp) {
-        this.targetIp = targetIp;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
-    public String getSenderName() {
-        return senderName;
+    public String getName() {
+        return name;
     }
 
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getMessage() {
