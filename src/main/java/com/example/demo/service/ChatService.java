@@ -41,7 +41,7 @@ public class ChatService {
                     message,
                     LocalDateTime.now()
             );
-            receiveMessage(dto, "127.0.0.1"); // вызов напрямую
+            receiveMessage(dto, "127.0.0.1"); // вызов напрямую в localhost (сомнительно?)
             return;
         }
 
